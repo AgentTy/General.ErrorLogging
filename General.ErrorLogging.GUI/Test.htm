@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript">
+        
+        
+        $().ready(function () {
+            //alert('ready');
+            //alert('test');
+            var a = setTimeout(function () {
+
+                //console.log(ErrorLogger.EventTypes.Javascript);
+                //console.log(ErrorLogger.EventTypes.Properties);
+                //console.log(ErrorLogger.EventTypes.Properties[ErrorLogger.EventTypes.Javascript]);
+                //alert(ErrorLogger.EventTypes.Properties[ErrorLogger.EventTypes.Javascript].Description);
+
+                //console.log(ErrorLogger.SeverityTypes.Properties[ErrorLogger.SeverityTypes.Normal].Description);
+                ErrorLogger.ReportError("some error", 4, 'sfsfsfdf', null, true);
+
+                ErrorLogger.ReportWarning("some warning", null, 'detailssss', 34);
+                ErrorLogger.ReportAudit("some audit", null, 'sssss', null);
+                ErrorLogger.ReportTrace("some trace", ErrorLogger.SeverityTypes.Low);
+ 
+            }, 1000);
+            //var b = setTimeout(function () { second = no.what; }, 2000);
+            //var c = setTimeout(function () { third = no.what; }, 3000);
+
+           // var laterprop = who.notsit;
+        });
+
+
+        //var notaprop = test.whatever;
+    </script>
+
+</head>
+<body>
+
+
+    <script type="text/javascript">
+        (function (e, t, r, n) { var a, o = e.getElementsByTagName('script')[0]; e.getElementById(t) || (a = e.createElement('script'), a.id = t, a.src = r, o.parentNode.insertBefore(a, o), a.readyState ? a.onreadystatechange = function () { ('loaded' == a.readyState || 'complete' == a.readyState) && (a.onreadystatechange = null, n && n()) } : a.onload = function () { n && n() }) }
+        (document, 'ErrorLogger', 'http://localhost:49170/Scripts/General.ErrorLogging.js', function () {
+            //Initialize the Error Reporter here
+            var strErrorAPIEndpoint = 'https://localhost:49170';
+            var strAPIAccessCode = 'XMSdG8G3LC6kEGL8';
+            var objAppContext = ErrorLogger.AppContextModel(0, 'General Test', 'live');
+            ErrorLogger.RegisterApplication(strErrorAPIEndpoint, strAPIAccessCode, objAppContext); //Setup Application Context data
+            //Start monitoring unhandled exceptions
+            ErrorLogger.ListenGlobal(function (event) {
+                //event is an instance of EventContextModel with all it's properties
+                //alert(event.EventName);
+                //alert(event.EventType);
+                //alert(event.UserAgent);
+                //alert(event.LineNumber);
+                //alert(event.MethodName);
+                if (event.SavedToDatabase && typeof console !== 'undefined')
+                    console.log('An error occurred in this application, you can use incident code ' + event.IncidentCode + ' when contacting support');
+            });
+        }));
+    </script>
+
+</body>
+</html>

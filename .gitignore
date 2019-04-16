@@ -6,6 +6,9 @@
 *.user
 *.sln.docstates
 
+# Visual Studio 2015 cache/options directory
+.vs/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -128,8 +131,33 @@ publish/
 ## passwords
 #*.pubxml
 
+
+# Ignore NuGet Packages
+*.nupkg
+
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/[Pp]ackages/repositories.config
+
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
+
+# Ignore other intermediate files that NuGet might create. project.lock.json is used in conjunction
+# with project.json (NuGet v3); project.assets.json is used in conjunction with the PackageReference
+# format (NuGet v4 and .NET Core).
+project.lock.json
+project.assets.json
+
+
+
 # NuGet Packages Directory
-packages/*
+# packages/*
 ## TODO: If the tool you use requires repositories.config
 ## uncomment the next line
 #!packages/repositories.config
@@ -138,7 +166,7 @@ packages/*
 # NuGet packages use it for MSBuild targets.
 # This line needs to be after the ignore of the build folder
 # (and the packages folder if the line above has been uncommented)
-!packages/build/
+# !packages/build/
 
 # Windows Azure Build Output
 csx/
@@ -187,3 +215,11 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/.svn
+/General.ErrorLogging.GUI/GUI.zip
+/General.ErrorLogging.GUI/Web.config.azure.prod
+/General.ErrorLogging.GUI/Web.config.toolkit.prod
+/General.ErrorLogging.GUI/Web.config
+/TestAsyncInFormsApp/App.config
+/General.ErrorLogging.Tests/App.config
+/General.ErrorLogging.GUI/Properties/PublishProfiles

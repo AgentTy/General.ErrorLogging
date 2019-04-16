@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.ErrorLogging", "General.ErrorLogging\General.ErrorLogging.csproj", "{80388D81-2ED9-4375-9899-FFB9FA4F4C3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General", "..\General\General\General.csproj", "{517D3DC5-C71E-4A11-A497-9D3479CF681D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.ErrorLogging.Tests", "General.ErrorLogging.Tests\General.ErrorLogging.Tests.csproj", "{48FCA673-B924-45CF-A030-A0672048664B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C3BEDE73-6450-4649-88FF-9C5D986DB06F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAsyncInFormsApp", "TestAsyncInFormsApp\TestAsyncInFormsApp.csproj", "{FF63E39A-4F30-42C6-8913-A7E8169E23FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.ErrorLogging.GUI", "General.ErrorLogging.GUI\General.ErrorLogging.GUI.csproj", "{78B205D4-F0E6-4D60-9469-BD8714501DB3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80388D81-2ED9-4375-9899-FFB9FA4F4C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80388D81-2ED9-4375-9899-FFB9FA4F4C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80388D81-2ED9-4375-9899-FFB9FA4F4C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80388D81-2ED9-4375-9899-FFB9FA4F4C3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{517D3DC5-C71E-4A11-A497-9D3479CF681D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{517D3DC5-C71E-4A11-A497-9D3479CF681D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{517D3DC5-C71E-4A11-A497-9D3479CF681D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{517D3DC5-C71E-4A11-A497-9D3479CF681D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48FCA673-B924-45CF-A030-A0672048664B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48FCA673-B924-45CF-A030-A0672048664B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48FCA673-B924-45CF-A030-A0672048664B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48FCA673-B924-45CF-A030-A0672048664B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF63E39A-4F30-42C6-8913-A7E8169E23FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF63E39A-4F30-42C6-8913-A7E8169E23FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF63E39A-4F30-42C6-8913-A7E8169E23FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF63E39A-4F30-42C6-8913-A7E8169E23FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78B205D4-F0E6-4D60-9469-BD8714501DB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B205D4-F0E6-4D60-9469-BD8714501DB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78B205D4-F0E6-4D60-9469-BD8714501DB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78B205D4-F0E6-4D60-9469-BD8714501DB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F60B2759-502A-4985-9303-03578A590C99}
+	EndGlobalSection
+EndGlobal

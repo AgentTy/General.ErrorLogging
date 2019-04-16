@@ -1,0 +1,77 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<!DOCTYPE html>
+<html lang="en">
+    <head runat="server">
+        <meta charset="utf-8" />
+        <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+        <link href="<%: Url.Content("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <%: Styles.Render("~/Content/css") %>
+        <%: Styles.Render("~/Content/themes/base/css") %>
+        <%: Scripts.Render("~/bundles/moment") %>
+        <%: Scripts.Render("~/bundles/OboeJS") %>
+        <%: Scripts.Render("~/bundles/modernizr") %>
+        <%: Scripts.Render("~/bundles/jquery") %>
+        <%: Scripts.Render("~/bundles/jqueryui") %>
+        <%: Scripts.Render("~/Scripts/General.ErrorLogging.min.js") %>
+        <script type="text/javascript">
+            window.HostedURI = '<%: General.ErrorLogging.GUI.Settings.HostedURI %>';
+        </script>
+        <% if (WebMatrix.WebData.WebSecurity.IsAuthenticated && !(Request.Url.LocalPath == "/APIGuide/ErrorLog"))
+           { %>
+        <script type="text/javascript">
+            var strAPIEndpoint = '<%: ErrorReporter.ErrorAPIEndpoint %>';
+            var strAPIAccessCode = '<%:ErrorReporter.ErrorAPIWriteOnlyAccessCode %>';
+            var objAppContext = ErrorLogger.AppContextModel(<%:ErrorReporter.AppID %>, '<%:ErrorReporter.DefaultAppNameForErrorLog %>', '<%:General.Environment.Current.WhereAmI() %>');
+            objAppContext.UserID = '<%: WebMatrix.WebData.WebSecurity.CurrentUserName %>';
+            ErrorLogger.RegisterApplication(strAPIEndpoint, strAPIAccessCode, objAppContext); //Setup Application Context data
+            //Start monitoring unhandled exceptions
+            ErrorLogger.ListenGlobal(function(event) {
+                if(event.SavedToDatabase)
+                    alert('An error occurred in this application, you can use incident code ' + event.IncidentCode + ' when contacting support');
+            }); 
+            <% } %>
+        </script>
+        <%: Scripts.Render("~/Scripts/General.Loading.js") %>
+    </head>
+    <body>
+        <div id="LoadingCurtain">Loading <span id="LoadingText"></span></div>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title"><%: Html.ActionLink("General.ErrorLogging", "Index", "Home") %></p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        <%: Html.Partial("_LoginPartial") %>
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li><%: Html.ActionLink("Home", "Index", "Home") %></li>
+                            <li><%: Html.ActionLink("Log", "ErrorLog", "Home") %></li>
+                            <li><%: Html.ActionLink("Filters", "Manage", "Filter") %></li>
+                            <li><%: Html.ActionLink("404", "Error404", "Home") %></li>
+                            <li><%: Html.ActionLink("Redirects", "Error404Redirect", "Home") %></li>
+                            <li><%: Html.ActionLink("Guide", "Index", "APIGuide") %></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
+            <section class="content-wrapper main-content clear-fix">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p onclick="alert(notavar.prop);">&copy; <%: DateTime.Now.Year %> - Ty Hansen</p>
+                </div>
+            </div>
+        </footer>
+        <asp:ContentPlaceHolder ID="NonBodyContent" runat="server" />
+        <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
+    </body>
+</html>

@@ -1,0 +1,168 @@
+﻿
+.EventView h1, .EventView h2, .EventView h3, .EventView h4, .EventView h5, .EventView h6 {
+
+}
+
+.EventView h1 { font-size: 1.75em; }
+.EventView h2 { font-size: 1.5em; }
+.EventView h3 { font-size: 1.2em; }
+.EventView h4 { font-size: 1.1em; }
+.EventView h5 { font-size: 1em; }
+.EventView h6 { font-size: .9em; }
+
+
+#detailHeader { color:#757575;  }
+#detailIncidentNumber { color:#757575; }
+#detailEventName { }
+#detailTimeStamp { margin-bottom:10px; }
+#detailSeverity, #detailEventType { margin-left:30px; color:#a3a3a3; opacity:.75; }
+#detailSeverity_Number {  }
+#detailBody { padding:14px; }
+#detailUserAgent { font-size:.75em; margin-left:15px; }
+#detailDateRange { margin-bottom:30px; margin-top:15px; max-width:140px; }
+#detailDateRange span { }
+
+#detailCount { float:left; font-size:2.5em; margin-right:6px; }
+#detailFirstTime { margin-top:6px; }
+#detailFirstTime, #detailLastTime  { font-style:italic; font-size:.8em; display:inline-block; }
+
+.EventView .LowSeverity { color:#687546; }
+.EventView .MedSeverity { color:#d4974c; }
+.EventView .HighSeverity { color:#ee4545; }
+
+.DetailList 
+{
+    list-style-type:none;
+}
+
+.DetailList label 
+{ 
+    font-style:italic;
+    font-size:.9em;
+    opacity:.6;
+    min-width:60px;
+    display:inline-block;
+}
+
+.DetailList span 
+{
+    padding-left:3px;
+    color: #484848;
+}
+
+.DetailList span.important
+{
+    color:black;
+    font-weight:bold;
+    font-size:1.1em;
+}
+
+.ColorDefault { }
+.BGColorDefault { background-color:#ddd; }
+
+.ColorServerError { color:#373076; }
+.BGColorServerError { background-color:#373076; }
+           
+.ColorJS { color:#649f64; }
+.BGColorJS { background-color:#649f64; }
+
+.ColorSQL { color:#979747; }
+.BGColorSQL { background-color:#979747; }
+
+.ColorInfo { color:#cca078; }
+.BGColorInfo { background-color:#cca078; }
+
+
+.EventView h1, .EventView h2, .EventView h3, .EventView h4, .EventView h5, .EventView h6 
+, .EventView li span
+{
+    word-wrap:break-word;
+}
+
+
+.EventView .detail-right ul {
+    padding-left:0;
+}
+
+@media only screen and (max-width: 450px) {
+    .EventView {
+        font-size:9px;
+    }
+
+    #detailTimeStamp, #detailURL {
+        padding-left:40px;
+    }
+
+}
+
+@media only screen and (min-width: 451px) and  (max-width: 750px) {
+    .EventView {
+        font-size:11px;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .EventView .detail-left {
+        width: 100%;
+        display:inline-block;
+    }
+
+    .EventView .detail-right {
+        width: 100%;
+        display:inline-block;
+    }
+
+    .detail-right .column {
+        display:inline-block;
+    }
+
+    #detailTimeStamp {
+        font-size:1.75em;
+    }
+
+    #LookupForm {
+        display:block;
+    }
+
+    #LookupForm input[type="text"]
+    {
+        width:60%;
+    }
+}
+
+@media only screen and (min-width: 751px) {
+    .EventView
+    {
+        position:relative;
+    }
+
+    .EventView .detail-left
+    {
+        width: 75%;
+        display:inline-block;
+    }
+
+    .EventView .detail-right 
+    {
+        /*
+        position: absolute;
+        right: 15px;
+        top: 33px;
+        */
+        width: 24%;
+        display:inline-block;
+    }
+
+    #detailEventName { max-width:90%; }
+
+    
+    #LookupForm {
+        
+    }
+
+    #LookupForm input[type="text"]
+    {
+        width:40%;
+    }
+
+}

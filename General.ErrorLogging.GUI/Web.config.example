@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections>
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <sectionGroup name="dotNetOpenAuth" type="DotNetOpenAuth.Configuration.DotNetOpenAuthSection, DotNetOpenAuth.Core">
+      <section name="oauth" type="DotNetOpenAuth.Configuration.OAuthElement, DotNetOpenAuth.OAuth" requirePermission="false" allowLocation="true" />
+      <section name="openid" type="DotNetOpenAuth.Configuration.OpenIdElement, DotNetOpenAuth.OpenId" requirePermission="false" allowLocation="true" />
+      <section name="messaging" type="DotNetOpenAuth.Configuration.MessagingElement, DotNetOpenAuth.Core" requirePermission="false" allowLocation="true" />
+      <section name="reporting" type="DotNetOpenAuth.Configuration.ReportingElement, DotNetOpenAuth.Core" requirePermission="false" allowLocation="true" />
+    </sectionGroup>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+  </configSections>
+  <connectionStrings>
+    <add name="DefaultConnection" connectionString="Server=DBSERVER;Database=ErrorLoggingDatabase;User ID=USER;Password=PASSWORD;Connect Timeout=300" providerName="System.Data.SqlClient" />
+    <add name="ErrorLog" connectionString="Server=DBSERVER;Database=ErrorLoggingDatabase;User ID=USER;Password=PASSWORD;Connect Timeout=300" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <appSettings>
+    <!-- Config for General.Environment -->
+    <!-- These keys allow you to tell the General library which servers are for Development or Staging use
+    The method General.Environment.Current.AmIDev(), AmIQA(), AmIStage(), and AmILive() will return T/F based on these settings.
+    All servers not listed will be considered PROD 
+    -->
+    <add key="ServerNameList_Dev" value="MACBOOKPRO,TYH-M93PW7,DESKTOP-DGQOU8H" />
+    <add key="ServerNameList_CustomEnv" value="" />
+    
+    <!-- Here is the signup code that users will need to create an account -->
+    <add key="AdminSignupAccessCode" value="ErrorLogSignupCode" />
+    <!-- Here is the access code that this API will accept for remote requests, must be duplicated below... -->
+    <add key="APIWriteOnlyAccessCode" value="4z3JePvyv2EWhX9U" />
+    <!-- These are the URL's for the application in each environment. -->
+    <add key="HostedURI_Dev" value="http://localhost:48179" />
+    <add key="HostedURI_CustomEnv" value="" />
+    <add key="HostedURI_Live" value="https://errorlogging.mydomain.com" />
+    
+    <!-- When sending a notification message, this will be added to the subject line -->
+    <add key="EventNotificationSubjectPrefix" value="[TKLogger]" />
+    <!-- Config for Twilio SMS API -->
+    <add key="TwilioAccount" value="" />
+    <add key="TwilioToken" value="" />
+    <add key="TwilioPhoneNumber" value="" />
+    
+    <!-- Config for General.ErrorLogging (how it will log its own errors) -->
+    <add key="AppIDForErrorLogging" value="0" />
+    <add key="DefaultAppNameForErrorLog" value="General Library" />
+    <!-- Duplicate URL's from above -->
+    <add key="ErrorAPIEndpoint_Dev" value="http://localhost:48179" />
+    <add key="ErrorAPIEndpoint_CustomEnv" value="" />
+    <add key="ErrorAPIEndpoint" value="https://errorlogging.mydomain.com" />
+    <!-- Here is the access code that will be used for error logging in this site -->
+    <add key="ErrorAPIWriteOnlyAccessCode" value="4z3JePvyv2EWhX9U" />
+    
+    <!-- Config for General.Debugging -->
+    <add key="ErrorEmailFrom" value="errors@errorlogging.com" />
+    <add key="ErrorEmailTo" value="my@email.com" />
+
+    <!-- Config for General.Mail -->
+    <add key="MailServerDev" value="smtp.sendgrid.net" />
+    <add key="MailServerDev_Port" value="587" />
+    <add key="MailServerDev_UserName" value="" />
+    <add key="MailServerDev_Password" value="" />
+    <add key="MailServerLive" value="smtp.sendgrid.net" />
+    <add key="MailServerLive_Port" value="587" />
+    <add key="MailServerLive_UserName" value="" />
+    <add key="MailServerLive_Password" value="" />
+
+    <!-- Random stuff -->
+    <add key="webpages:Version" value="2.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+  </appSettings>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.5.1" />
+      </system.Web>
+  -->
+  <system.web>
+    <customErrors mode="Off" />
+    <compilation debug="true" targetFramework="4.7.2">
+      <assemblies>
+        <add assembly="System.Data.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+      </assemblies>
+    </compilation>
+    <httpRuntime targetFramework="4.5" />
+    <authentication mode="Forms">
+      <forms loginUrl="~/Account/Login" timeout="2880" />
+    </authentication>
+    <pages>
+      <namespaces>
+        <add namespace="System.Web.Helpers" />
+        <add namespace="System.Web.Mvc" />
+        <add namespace="System.Web.Mvc.Ajax" />
+        <add namespace="System.Web.Mvc.Html" />
+        <add namespace="System.Web.Optimization" />
+        <add namespace="System.Web.Routing" />
+        <add namespace="System.Web.WebPages" />
+      </namespaces>
+    </pages>
+  </system.web>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules runAllManagedModulesForAllRequests="true">
+      <remove name="WebDAVModule" />
+    </modules>
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="DotNetOpenAuth.Core" publicKeyToken="2780ccd10d57b246" />
+        <bindingRedirect oldVersion="0.0.0.0-4.3.0.0" newVersion="4.3.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="DotNetOpenAuth.AspNet" publicKeyToken="2780ccd10d57b246" />
+        <bindingRedirect oldVersion="0.0.0.0-4.3.0.0" newVersion="4.3.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-1.6.5135.21930" newVersion="1.6.5135.21930" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Http" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.7.0" newVersion="5.2.7.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Net.Http.Formatting" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.7.0" newVersion="5.2.7.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-11.0.0.0" newVersion="11.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages.Razor" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Razor" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebMatrix.WebData" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebMatrix.Data" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Antlr3.Runtime" publicKeyToken="eb42632606e9261f" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.5.0.2" newVersion="3.5.0.2" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Data.Edm" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Data.OData" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Spatial" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+    <!-- When targeting ASP.NET MVC 3, this assemblyBinding makes MVC 1 and 2 references relink
+         to MVC 3 so libraries such as DotNetOpenAuth that compile against MVC 1 will work with it.
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+     -->
+    <!-- This prevents the Windows Event Log from frequently logging that HMAC1 is being used (when the other party needs it). -->
+    <legacyHMACWarning enabled="0" />
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="v11.0" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+  <dotNetOpenAuth>
+    <!-- This is an optional configuration section where aspects of dotnetopenauth can be customized. -->
+    <!-- For a complete set of configuration options see http://www.dotnetopenauth.net/developers/code-snippets/configuration-options/ -->
+    <openid>
+      <relyingParty>
+        <security requireSsl="false">
+          <!-- Uncomment the trustedProviders tag if your relying party should only accept positive assertions from a closed set of OpenID Providers. -->
+          <!--<trustedProviders rejectAssertionsFromUntrustedProviders="true">
+            <add endpoint="https://www.google.com/accounts/o8/ud" />
+          </trustedProviders>-->
+        </security>
+        <behaviors>
+          <!-- The following OPTIONAL behavior allows RPs to use SREG only, but be compatible
+               with OPs that use Attribute Exchange (in various formats). -->
+          <add type="DotNetOpenAuth.OpenId.RelyingParty.Behaviors.AXFetchAsSregTransform, DotNetOpenAuth.OpenId.RelyingParty" />
+        </behaviors>
+      </relyingParty>
+    </openid>
+    <messaging>
+      <untrustedWebRequest>
+        <whitelistHosts>
+          <!-- Uncomment to enable communication with localhost (should generally not activate in production!) -->
+          <!--<add name="localhost" />-->
+        </whitelistHosts>
+      </untrustedWebRequest>
+    </messaging>
+    <!-- Allow DotNetOpenAuth to publish usage statistics to library authors to improve the library. -->
+    <reporting enabled="true" />
+  </dotNetOpenAuth>
+  <uri>
+    <!-- The uri section is necessary to turn on .NET 3.5 support for IDN (international domain names),
+         which is necessary for OpenID urls with unicode characters in the domain/host name.
+         It is also required to put the Uri class into RFC 3986 escaping mode, which OpenID and OAuth require. -->
+    <idn enabled="All" />
+    <iriParsing enabled="true" />
+  </uri>
+  <system.net>
+    <defaultProxy enabled="true" />
+    <settings>
+      <!-- This setting causes .NET to check certificate revocation lists (CRL) 
+           before trusting HTTPS certificates.  But this setting tends to not 
+           be allowed in shared hosting environments. -->
+      <!--<servicePointManager checkCertificateRevocationList="true"/>-->
+    </settings>
+  </system.net>
+</configuration>

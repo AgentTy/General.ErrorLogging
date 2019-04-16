@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>WhoAmI</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="~/Scripts/General.ErrorLogging.js"></script>
+
+    <script type="text/javascript">
+    var strAPIEndpoint = '@ErrorReporter.ErrorAPIEndpoint';
+    var strAPIAccessCode = '@ErrorReporter.ErrorAPIWriteOnlyAccessCode';
+    var objAppContext = ErrorLogger.AppContextModel(@ErrorReporter.AppID, '@ErrorReporter.DefaultAppNameForErrorLog', '@General.Environment.Current.WhereAmI()');
+    ErrorLogger.RegisterApplication(strAPIEndpoint, strAPIAccessCode, objAppContext); //Setup Application Context data
+    //Start monitoring unhandled exceptions
+    ErrorLogger.ListenGlobal(function(event) {
+        if(event.SavedToDatabase)
+            alert('An error occurred in this application, you can use incident code ' + event.IncidentCode + ' when contacting support');
+    });
+    </script>
+
+
+    <script type="text/javascript">
+        $().ready(function () {
+            ErrorLogger.DisplayHistory($('#divHistContainer')[0]); 
+        });
+
+    </script>
+
+    <style type="text/css">
+        #divHistContainer table {
+            border-spacing:0;
+        }
+
+        #divHistContainer thead { background: #ddd; }
+        #divHistContainer tr { margin:0; }
+        #divHistContainer td { border:solid 1px black; margin:0; padding:4px; }
+
+    </style>
+</head>
+<body>
+    <div> 
+        <h1><span style="color:#999;">Hosting Server:</span> @ViewBag.MachineName</h1>
+        <h3>Environment Type: @General.Environment.Current.WhereAmI()</h3>
+        <hr/>
+        <h2>Client Error Log</h2>
+        <div id="divHistContainer">
+
+        </div>
+    </div>
+</body>
+</html>
