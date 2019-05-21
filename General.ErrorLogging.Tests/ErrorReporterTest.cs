@@ -7,12 +7,6 @@ namespace General.ErrorLogging.Client.Tests
     [TestClass]
     public class ErrorReporterTest
     {
-        [TestMethod]
-        public void TestGetFilters()
-        {
-            var filters = General.ErrorLogging.Data.LoggingFilter.GetFiltersForRemoteServer(18);
-            Assert.IsNotNull(filters);
-        }
 
         [TestMethod]
         public async Task TestError()
@@ -57,29 +51,6 @@ namespace General.ErrorLogging.Client.Tests
             Assert.IsTrue(response1.Success);
             Assert.IsFalse(String.IsNullOrWhiteSpace(response1.IncidentCode) || response1.IncidentCode == "0");
 
-            /*
-            try
-            {
-                long intTest = 42424242242423342;
-                short test = Convert.ToInt16(intTest);
-            }
-            catch (Exception ex)
-            {
-                ApplicationContext context = new ApplicationContext();
-                context.ClientID = "client4";
-                context.Custom1 = "cus1";
-                context.Custom2 = "cus2";
-                context.Custom3 = "cus3";
-                context.CustomID = 9876;
-                context.UserID = "user4";
-                context.UserType = "utype4";
-
-                var response2 = ErrorReporter.ReportError(ex, "My Error Name", context: context, intSeverity: 99, strDetails: "these are more details").Result;
-                Assert.IsNotNull(response2);
-                Assert.IsTrue(response2.Success);
-                Assert.IsFalse(String.IsNullOrWhiteSpace(response2.IncidentCode) || response2.IncidentCode == "0");
-            }
-            */
         }
 
 
