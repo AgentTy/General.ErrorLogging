@@ -565,6 +565,7 @@ namespace General.ErrorLogging.Data
             }
             TimeSpan ts2 = DateTime.Now - dtStart2;
             */
+
             /*
             DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
             System.Threading.Tasks.Parallel.ForEach(objTable.AsEnumerable(), drow =>

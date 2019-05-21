@@ -57,7 +57,7 @@ namespace General.ErrorLogging.Client.Tests
             Assert.IsTrue(response1.Success);
             Assert.IsFalse(String.IsNullOrWhiteSpace(response1.IncidentCode) || response1.IncidentCode == "0");
 
-
+            /*
             try
             {
                 long intTest = 42424242242423342;
@@ -79,7 +79,7 @@ namespace General.ErrorLogging.Client.Tests
                 Assert.IsTrue(response2.Success);
                 Assert.IsFalse(String.IsNullOrWhiteSpace(response2.IncidentCode) || response2.IncidentCode == "0");
             }
-
+            */
         }
 
 

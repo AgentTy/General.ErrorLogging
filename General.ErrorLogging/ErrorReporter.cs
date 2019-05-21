@@ -7,6 +7,7 @@ using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 public class EventContext
 {
@@ -257,6 +258,32 @@ public class ErrorReporter
 
     #region Settings
 
+    #region Configure (.Net Core) 
+    public static void Configure(IConfiguration config)
+    {
+        if(config is Microsoft.Extensions.Configuration.IConfigurationRoot)
+        {
+            var section = config.GetSection("General.ErrorLogging");
+            coreConfig = section;
+        }
+        else if(config is Microsoft.Extensions.Configuration.IConfigurationSection)
+        {
+            coreConfig = (Microsoft.Extensions.Configuration.IConfigurationSection) config;
+        }
+    }
+
+    private static void ReadConfigSection(Microsoft.Extensions.Configuration.IConfigurationSection section)
+    {
+        foreach (var child in section.GetChildren())
+        {
+            if(child.Key == "AppIDForErrorLogging")
+            {
+                throw new Exception("Found it!");
+            }
+        }
+    }
+    #endregion
+
     #region IsConfiguredAndEnabled
     public static bool IsConfiguredAndEnabled()
     {
@@ -355,9 +382,20 @@ public class ErrorReporter
         return Default;
     }
 
+    private static Microsoft.Extensions.Configuration.IConfigurationSection coreConfig;
     private static string GetSetting(string Key, string Default = null)
     {
         string strSuffix = "_" + General.Environment.Current.WhereAmI().ToString().ToLower();
+
+        //Support for a config passed in via .Net Core
+        if(coreConfig != null)
+        {
+            foreach(var setting in coreConfig.GetChildren())
+            {
+                if (setting.Key.ToLower() == Key.ToLower())
+                    return setting.Value;
+            }
+        }
 
         //Support for environmental variables in Azure
         if (!String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(Key + strSuffix)))
