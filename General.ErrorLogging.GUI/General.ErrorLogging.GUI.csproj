@@ -396,6 +396,9 @@
     <Content Include="Content\themes\archive\jquery-ui-1.8.24.min.js" />
     <Content Include="ApplicationInsights.config" />
     <Content Include="Connected Services\Application Insights\ConnectedService.json" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\ErrorLogging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ErrorLogging QA - AZMISDWEB04.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -504,9 +507,6 @@
     <None Include="Web.config.toolkit.prod">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

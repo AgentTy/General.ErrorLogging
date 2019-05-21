@@ -105,11 +105,19 @@
         <add namespace="System.Web.WebPages" />
       </namespaces>
     </pages>
+    <httpModules>
+      <add name="TelemetryCorrelationHttpModule" type="Microsoft.AspNet.TelemetryCorrelation.TelemetryCorrelationHttpModule, Microsoft.AspNet.TelemetryCorrelation" />
+      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" />
+    </httpModules>
   </system.web>
   <system.webServer>
     <validation validateIntegratedModeConfiguration="false" />
     <modules runAllManagedModulesForAllRequests="true">
       <remove name="WebDAVModule" />
+      <remove name="TelemetryCorrelationHttpModule" />
+      <add name="TelemetryCorrelationHttpModule" type="Microsoft.AspNet.TelemetryCorrelation.TelemetryCorrelationHttpModule, Microsoft.AspNet.TelemetryCorrelation" preCondition="managedHandler" />
+      <remove name="ApplicationInsightsWebTracking" />
+      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" preCondition="managedHandler" />
     </modules>
     <handlers>
       <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
@@ -178,15 +186,15 @@
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="Microsoft.Data.Edm" publicKeyToken="31bf3856ad364e35" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0" />
+        <bindingRedirect oldVersion="0.0.0.0-5.8.4.0" newVersion="5.8.4.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="Microsoft.Data.OData" publicKeyToken="31bf3856ad364e35" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0" />
+        <bindingRedirect oldVersion="0.0.0.0-5.8.4.0" newVersion="5.8.4.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Spatial" publicKeyToken="31bf3856ad364e35" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0" />
+        <bindingRedirect oldVersion="0.0.0.0-5.8.4.0" newVersion="5.8.4.0" />
       </dependentAssembly>
     </assemblyBinding>
     <!-- When targeting ASP.NET MVC 3, this assemblyBinding makes MVC 1 and 2 references relink
