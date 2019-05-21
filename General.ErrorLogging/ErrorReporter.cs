@@ -7,7 +7,7 @@ using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
+using System.Collections.Specialized;
 
 public class EventContext
 {
@@ -259,33 +259,16 @@ public class ErrorReporter
     #region Settings
 
     #region Configure (.Net Core) 
-    public static void Configure(IConfiguration config)
-    {
-        if(config is Microsoft.Extensions.Configuration.IConfigurationRoot)
-        {
-            var section = config.GetSection("General.ErrorLogging");
-            coreConfig = section;
-        }
-        else if(config is Microsoft.Extensions.Configuration.IConfigurationSection)
-        {
-            coreConfig = (Microsoft.Extensions.Configuration.IConfigurationSection) config;
-        }
-    }
 
-    private static void ReadConfigSection(Microsoft.Extensions.Configuration.IConfigurationSection section)
+    private static NameValueCollection coreConfig;
+    public static void Configure(NameValueCollection config)
     {
-        foreach (var child in section.GetChildren())
-        {
-            if(child.Key == "AppIDForErrorLogging")
-            {
-                throw new Exception("Found it!");
-            }
-        }
+        coreConfig = config;
     }
     #endregion
 
     #region IsConfiguredAndEnabled
-    public static bool IsConfiguredAndEnabled()
+        public static bool IsConfiguredAndEnabled()
     {
         var result = true;
         if (!Enabled)
@@ -382,18 +365,18 @@ public class ErrorReporter
         return Default;
     }
 
-    private static Microsoft.Extensions.Configuration.IConfigurationSection coreConfig;
+
     private static string GetSetting(string Key, string Default = null)
     {
         string strSuffix = "_" + General.Environment.Current.WhereAmI().ToString().ToLower();
 
-        //Support for a config passed in via .Net Core
+        //Support for a config passed in via a NameValueCollection
         if(coreConfig != null)
         {
-            foreach(var setting in coreConfig.GetChildren())
+            foreach(string key in coreConfig)
             {
-                if (setting.Key.ToLower() == Key.ToLower())
-                    return setting.Value;
+                if (key.ToLower() == Key.ToLower())
+                    return coreConfig[key];
             }
         }
 
@@ -426,20 +409,20 @@ public class ErrorReporter
         }
         return Default;
     }
-    #endregion
+#endregion
 
-    #region Constructor
+#region Constructor
     public ErrorReporter()
     {
 
     }
-    #endregion
+#endregion
 
-    #region ReportError
+#region ReportError
 
-    #region By Exception Object
+#region By Exception Object
 
-    #region Without A Name (overloads)
+#region Without A Name (overloads)
     public static async Task<EventReporterResponse> ReportErrorLowSeverity(Exception exObj, ApplicationContext context = null, ExecutionContext xContext = null)
     {
         return await ReportError(exObj, String.Empty, context, xContext, String.Empty, intSeverity: LowSeverity).ConfigureAwait(false);
@@ -459,11 +442,11 @@ public class ErrorReporter
     {
         return await ReportError(exObj, String.Empty, context, xContext, String.Empty, intSeverity).ConfigureAwait(false);
     }
-    #endregion
+#endregion
 
-    #region With A Name
+#region With A Name
 
-    #region overloads
+#region overloads
     public static async Task<EventReporterResponse> ReportErrorLowSeverity(Exception exObj, string strErrorName, ApplicationContext context = null, ExecutionContext xContext = null, string strDetails = null, int? intDuration = null)
     {
         return await ReportError(exObj, strErrorName, context, xContext, strDetails, intSeverity: LowSeverity, intDuration: intDuration).ConfigureAwait(false);
@@ -478,7 +461,7 @@ public class ErrorReporter
     {
         return await ReportError(exObj, strErrorName, context, xContext, strDetails, intSeverity: HighSeverity, intDuration: intDuration).ConfigureAwait(false);
     }
-    #endregion
+#endregion
 
     public static async Task<EventReporterResponse> ReportError(Exception exObj, string strErrorName, ApplicationContext context = null, ExecutionContext xContext = null, string strDetails = null, int? intSeverity = null, int? intDuration = null)
     {
@@ -494,7 +477,7 @@ public class ErrorReporter
                 , Duration: intDuration);
             req.EventType = General.ErrorLogging.Model.ErrorOtherTypes.Server;
 
-            #region Error Details
+#region Error Details
             StringBuilder sbDetail = new StringBuilder();
             if (exObj != null)
                 sbDetail = General.Debugging.ErrorReporter.GetErrorReport(exObj, "\r\n");
@@ -502,7 +485,7 @@ public class ErrorReporter
             if (!StringFunctions.IsNullOrWhiteSpace(strDetails))
                 sbDetail.Insert(0, strDetails + "\r\n");
 
-            #region Read Execution Context for HttpRequest or DB Log
+#region Read Execution Context for HttpRequest or DB Log
             if (xContext != null)
             {
                 if(xContext.RequestedURI != null)
@@ -523,23 +506,23 @@ public class ErrorReporter
                 if(!String.IsNullOrWhiteSpace(xContext.RequestBody))
                     sbDetail.AppendLine(xContext.RequestBody);
             }
-            #endregion
+#endregion
 
             req.EventDetail = sbDetail.ToString();
-            #endregion
+#endregion
 
-            #region Handle NULL Exception
+#region Handle NULL Exception
             if(exObj == null)
             {
                 exObj = new Exception("Unspecified Error");
             }
-            #endregion
+#endregion
 
             try
             {
                 Exception exBase = exObj.GetBaseException();
 
-                #region Detect EventType
+#region Detect EventType
                 if (exBase is System.Data.SqlClient.SqlException || exObj is System.Data.SqlClient.SqlException || req.EventDetail.Contains("System.Data.SqlClient"))
                 {
                     req.EventType = General.ErrorLogging.Model.ErrorOtherTypes.SQL;
@@ -558,9 +541,9 @@ public class ErrorReporter
                         req.EventType = General.ErrorLogging.Model.ErrorOtherTypes.SQLConnectivity;
 
                 }
-                #endregion
+#endregion
 
-                #region Get HTTP Error Code
+#region Get HTTP Error Code
 #if NET472 || NET471 || NET47 || NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
                 if (exObj is HttpException)
                     req.ErrorCode = ((HttpException)exObj).GetHttpCode().ToString();
@@ -571,9 +554,9 @@ public class ErrorReporter
                     req.ErrorCode = ((System.Net.WebException)exObj).Status.ToString();
                 else if (exBase is System.Net.WebException)
                     req.ErrorCode = ((System.Net.WebException)exBase).Status.ToString();
-                #endregion
+#endregion
 
-                #region Get Method / FileName / LineNumber
+#region Get Method / FileName / LineNumber
                 try
                 {
                     System.Reflection.MethodBase objMethod = exBase.TargetSite;
@@ -626,9 +609,9 @@ public class ErrorReporter
 
                 }
                 catch { }
-                #endregion
+#endregion
 
-                #region Error Name
+#region Error Name
                                 if (!StringFunctions.IsNullOrWhiteSpace(strErrorName))
                                     strErrorName = strErrorName + " - " + exBase.Message;
                                 else
@@ -641,13 +624,13 @@ public class ErrorReporter
                                 */
                                 strErrorName = General.Debugging.ErrorReporter.SanitizeString(strErrorName); //Remove private stuff like passwords
                                 req.EventName = strErrorName;
-                #endregion
+#endregion
 
-                #region Exception Type
+#region Exception Type
                 req.ExceptionType = exBase.GetType().Name;
-                #endregion
+#endregion
 
-                #region Event History (from cookie)
+#region Event History (from cookie)
                 EventHistoryContext histContext = null;
 #if NET472 || NET471 || NET47 || NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
                     
@@ -671,9 +654,9 @@ public class ErrorReporter
                     }
                     catch(Exception ex) { req.Custom3 = ex.Message; }
 #endif
-                #endregion
+#endregion
 
-                #region Send To Database
+#region Send To Database
                 //I will store this event if it matches any filters
                 var filterContext = await ErrorReporter.ShouldStoreEvent(req, context).ConfigureAwait(false);
                 if (filterContext.IShouldStoreEvent)
@@ -684,7 +667,7 @@ public class ErrorReporter
                 {
                     response = SetNoMatchedFilterResponse(response, req);
                 }
-                #endregion
+#endregion
 
             }
             catch (Exception ex)
