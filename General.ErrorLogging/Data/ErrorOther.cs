@@ -30,7 +30,7 @@ namespace General.ErrorLogging.Data
                 SqlCommand cmd = ErrorQueue[0];
                 try
                 {
-                    SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+                    SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
                     ErrorQueue.RemoveAt(0);
                 }
                 catch
@@ -109,7 +109,7 @@ namespace General.ErrorLogging.Data
 
             try
             {
-                long intIncidentID = SqlConvert.ToInt64(SqlHelper.ExecuteScalar(cmd, ConnectionStringName));
+                long intIncidentID = SqlConvert.ToInt64(SqlHelper.ExecuteScalar(cmd, null, ConnectionStringName));
                 try { ClearQueue(); }
                 catch { }
                 return intIncidentID;
@@ -189,7 +189,7 @@ namespace General.ErrorLogging.Data
 
             try
             {
-                long intIncidentID = SqlConvert.ToInt64(SqlHelper.ExecuteScalar(cmd, ConnectionStringName));
+                long intIncidentID = SqlConvert.ToInt64(SqlHelper.ExecuteScalar(cmd, null, ConnectionStringName));
                 try { ClearQueue(); }
                 catch { }
                 return intIncidentID;
@@ -272,7 +272,7 @@ namespace General.ErrorLogging.Data
 
             try
             {
-                long intIncidentID = SqlConvert.ToInt64(SqlHelper.ExecuteScalar(cmd, ConnectionStringName));
+                long intIncidentID = SqlConvert.ToInt64(SqlHelper.ExecuteScalar(cmd, null, ConnectionStringName));
                 try { ClearQueue(); }
                 catch { }
                 return intIncidentID;
@@ -314,7 +314,7 @@ namespace General.ErrorLogging.Data
 			cmd.Parameters.AddWithValue("@Custom3",SqlConvert.ToSql(objModel.Custom3));
             cmd.Parameters.AddWithValue("@Duration", SqlConvert.ToSql(objModel.Duration));
 
-			return GetErrorOtherModel(SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0].Rows[0]);
+			return GetErrorOtherModel(SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0].Rows[0]);
 		}
         #endregion UpdateEventSummary
 
@@ -325,7 +325,7 @@ namespace General.ErrorLogging.Data
             cmd = new SqlCommand("[dbo].[pr_ErrorOther_Delete]");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@ErrorOtherID", SqlConvert.ToSql(intID));
-            SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+            SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
         }
 
         public static void DeleteEventOccurrence(Int64 intID)
@@ -334,7 +334,7 @@ namespace General.ErrorLogging.Data
             cmd = new SqlCommand("[dbo].[pr_ErrorOtherLog_Delete]");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@ErrorOtherLogID", SqlConvert.ToSql(intID));
-            SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+            SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
         }
         #endregion DeleteEventSeries / DeleteEventOccurrence
 
@@ -346,7 +346,7 @@ namespace General.ErrorLogging.Data
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.AddWithValue("@ErrorOtherID",SqlConvert.ToSql(intID));
 
-            var ds = SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            var ds = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
             if (ds == null)
                 return null;
             if (ds.Tables.Count == 0)
@@ -365,7 +365,7 @@ namespace General.ErrorLogging.Data
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@ErrorOtherLogID", SqlConvert.ToSql(intOccurrenceID));
 
-            var ds = SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            var ds = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
             if (ds == null)
                 return null;
             if (ds.Tables.Count == 0)
@@ -384,7 +384,7 @@ namespace General.ErrorLogging.Data
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@ErrorOtherID", intErrorOtherID);
             cmd.Parameters.AddWithValue("@IncludeDetail", blnIncludeDetail);
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.ErrorOtherOccurrence> aryModels = new List<Model.ErrorOtherOccurrence>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -458,7 +458,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
             if (blnIncludeDetail.HasValue)
                 cmd.Parameters.AddWithValue("@IncludeDetail", blnIncludeDetail.Value);
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.ErrorOther> aryModels = new List<Model.ErrorOther>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -508,7 +508,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
             if (blnIncludeDetail.HasValue)
                 cmd.Parameters.AddWithValue("@IncludeDetail", blnIncludeDetail.Value);
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.ErrorOther> aryModels = new List<Model.ErrorOther>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -669,7 +669,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
             if (blnIncludeDetail.HasValue)
                 cmd.Parameters.AddWithValue("@IncludeDetail", blnIncludeDetail.Value);
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.ErrorOtherOccurrence> aryModels = new List<Model.ErrorOtherOccurrence>();
             foreach (DataRow objRow in objTable.Rows)
             {

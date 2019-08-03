@@ -30,7 +30,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@UserAgent", SqlConvert.ToSql(UserAgent));
 			cmd.Parameters.AddWithValue("@Detail", SqlConvert.ToSql(Detail));
 
-            return GetError404Model(SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0].Rows[0]);
+            return GetError404Model(SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0].Rows[0]);
 		}
         #endregion RecordError404
 
@@ -47,7 +47,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@UserAgent", SqlConvert.ToSql(objModel.UserAgent));
 			cmd.Parameters.AddWithValue("@Detail",SqlConvert.ToSql(objModel.Detail));
 
-			return GetError404Model(SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0].Rows[0]);
+			return GetError404Model(SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0].Rows[0]);
 		}
         #endregion UpdateError404
 
@@ -59,7 +59,7 @@ namespace General.ErrorLogging.Data
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Error404ID", intID);
             cmd.Parameters.AddWithValue("@Hide", blnHide);
-            SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+            SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
         }
         #endregion UpdateError404Visibility
 
@@ -70,7 +70,7 @@ namespace General.ErrorLogging.Data
             cmd = new SqlCommand("[dbo].[pr_Error404_Delete]");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Error404ID", SqlConvert.ToSql(intID));
-            SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+            SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
         }
         #endregion DeleteError404
 
@@ -82,7 +82,7 @@ namespace General.ErrorLogging.Data
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.AddWithValue("@Error404ID",SqlConvert.ToSql(intID));
 
-            var ds = SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            var ds = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
             if (ds == null)
                 return null;
             if (ds.Tables.Count == 0)
@@ -108,7 +108,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@StartDate", dtStartDate);
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
 
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.Error404> lstModels = new List<Model.Error404>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -133,7 +133,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@StartDate", dtStartDate);
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
 
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.Error404> lstModels = new List<Model.Error404>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -158,7 +158,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@StartDate", dtStartDate);
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
 
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.Error404> lstModels = new List<Model.Error404>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -185,7 +185,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@StartDate", dtStartDate);
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
 
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.Error404> lstModels = new List<Model.Error404>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -213,7 +213,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
             cmd.Parameters.AddWithValue("@ReturnCommonOnly", 1);
 
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.Error404> lstModels = new List<Model.Error404>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -241,7 +241,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@EndDate", dtEndDate);
             cmd.Parameters.AddWithValue("@ReturnHidden", 1);
 
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.Error404> lstModels = new List<Model.Error404>();
             foreach (DataRow objRow in objTable.Rows)
             {

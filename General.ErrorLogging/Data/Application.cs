@@ -49,7 +49,7 @@ namespace General.ErrorLogging.Data
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.AddWithValue("@AppID",SqlConvert.ToSql(intID));
 
-            var ds = SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            var ds = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
             if (ds == null)
                 return null;
             if (ds.Tables.Count == 0)
@@ -69,7 +69,7 @@ namespace General.ErrorLogging.Data
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@AppID", SqlConvert.ToSql(intID));
 
-            var ds = SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            var ds = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
             if (ds == null)
                 return null;
             if (ds.Tables.Count == 0)
@@ -87,7 +87,7 @@ namespace General.ErrorLogging.Data
             SqlCommand cmd;
             cmd = new SqlCommand("[dbo].[pr_Application_SelectAll]");
             cmd.CommandType = CommandType.StoredProcedure;
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.Application> lstModels = new List<Model.Application>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -142,7 +142,7 @@ namespace General.ErrorLogging.Data
             cmd = new SqlCommand("[dbo].[pr_Application_SelectClients]");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@AppID", SqlConvert.ToSql(intAppID));
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<string> lstModels = new List<string>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -166,7 +166,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@AppID", SqlConvert.ToSql(intAppID));
             if (!StringFunctions.IsNullOrWhiteSpace(strClientID))
                 cmd.Parameters.AddWithValue("@ClientID", SqlConvert.ToSql(strClientID));
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<string> lstModels = new List<string>();
             foreach (DataRow objRow in objTable.Rows)
             {

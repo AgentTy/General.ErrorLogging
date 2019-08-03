@@ -30,7 +30,7 @@ namespace General.ErrorLogging.Data
 			cmd.Parameters.AddWithValue("@From",SqlConvert.ToSql(objModel.From));
 			cmd.Parameters.AddWithValue("@To",SqlConvert.ToSql(objModel.To));
 
-            return GetError404RedirectModel(SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0].Rows[0]);
+            return GetError404RedirectModel(SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0].Rows[0]);
 		}
 		#endregion CreateError404Redirect
 
@@ -48,7 +48,7 @@ namespace General.ErrorLogging.Data
 			cmd.Parameters.AddWithValue("@LastTime",SqlConvert.ToSql(objModel.LastTime));
 			cmd.Parameters.AddWithValue("@Count",SqlConvert.ToSql(objModel.Count));
 
-			return GetError404RedirectModel(SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0].Rows[0]);
+			return GetError404RedirectModel(SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0].Rows[0]);
 		}
         #endregion UpdateError404Redirect
 
@@ -63,7 +63,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@LastTime", SqlConvert.ToSql(objModel.LastTime));
             cmd.Parameters.AddWithValue("@Count", SqlConvert.ToSql(objModel.Count));
 
-            return GetError404RedirectModel(SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0].Rows[0]);
+            return GetError404RedirectModel(SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0].Rows[0]);
         }
         #endregion UpdateError404Redirect
 
@@ -74,7 +74,7 @@ namespace General.ErrorLogging.Data
             cmd = new SqlCommand("[dbo].[pr_Error404Redirect_Delete]");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Error404RedirectID", SqlConvert.ToSql(intID));
-            SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+            SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
         }
         #endregion DeleteError404Redirect
 
@@ -86,7 +86,7 @@ namespace General.ErrorLogging.Data
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.AddWithValue("@Error404RedirectID",SqlConvert.ToSql(intID));
 
-            var ds = SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            var ds = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
             if (ds == null)
                 return null;
             if (ds.Tables.Count == 0)
@@ -107,7 +107,7 @@ namespace General.ErrorLogging.Data
                 cmd.Parameters.AddWithValue("@ClientID", strClientID);
             cmd.Parameters.AddWithValue("@From", SqlConvert.ToSql(strFrom));
 
-            var ds = SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            var ds = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
             if (ds == null)
                 return null;
             if (ds.Tables.Count == 0)
@@ -128,7 +128,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@AppID", intAppID);
             if (!StringFunctions.IsNullOrWhiteSpace(strClientID))
                 cmd.Parameters.AddWithValue("@ClientID", strClientID);
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.Error404Redirect> lstModels = new List<Model.Error404Redirect>();
             foreach (DataRow objRow in objTable.Rows)
             {

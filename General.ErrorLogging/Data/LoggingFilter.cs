@@ -40,7 +40,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@Custom2", SqlConvert.ToSql(objModel.Custom2));
             cmd.Parameters.AddWithValue("@Custom3", SqlConvert.ToSql(objModel.Custom3));
 
-            return GetFilterModel(SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0].Rows[0]);
+            return GetFilterModel(SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0].Rows[0]);
         }
         #endregion CreateLoggingFilter
 
@@ -66,7 +66,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@Custom2", SqlConvert.ToSql(objModel.Custom2));
             cmd.Parameters.AddWithValue("@Custom3", SqlConvert.ToSql(objModel.Custom3));
 
-            return GetFilterModel(SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0].Rows[0]);
+            return GetFilterModel(SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0].Rows[0]);
         }
         #endregion UpdateLoggingFilter
 
@@ -78,7 +78,7 @@ namespace General.ErrorLogging.Data
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@LoggingFilterID", SqlConvert.ToSql(intID));
             cmd.Parameters.AddWithValue("@Enabled", SqlConvert.ToSql(blnEnabled));
-            SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+            SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
         }
         #endregion UpdateLoggingFilterStatus
 
@@ -89,7 +89,7 @@ namespace General.ErrorLogging.Data
             cmd = new SqlCommand("[dbo].[pr_LoggingFilter_Delete]");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@LoggingFilterID", SqlConvert.ToSql(intID));
-            SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+            SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
         }
         #endregion DeleteLoggingFilter
 
@@ -101,7 +101,7 @@ namespace General.ErrorLogging.Data
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.AddWithValue("@FilterID",SqlConvert.ToSql(intID));
 
-            var ds = SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            var ds = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
             if (ds == null)
                 return null;
             if (ds.Tables.Count == 0)
@@ -138,7 +138,7 @@ namespace General.ErrorLogging.Data
             if (intAppID.HasValue)
                 cmd.Parameters.AddWithValue("@AppID", intAppID.Value);
             cmd.Parameters.AddWithValue("@ActiveOnly", blnActiveOnly);
-            return SqlHelper.ExecuteDataset(cmd, ConnectionStringName);
+            return SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName);
         }
 
         public static List<ILoggingFilter> GetFilters(int? intAppID, LoggingFilterRequestContext objAppContext = null, bool blnActiveOnly = true)

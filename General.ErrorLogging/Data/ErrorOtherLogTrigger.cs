@@ -21,7 +21,7 @@ namespace General.ErrorLogging.Data
             cmd.CommandType = CommandType.StoredProcedure;
             if (intAppID.HasValue)
                 cmd.Parameters.AddWithValue("@AppID", intAppID.Value);
-            DataTable objTable = SqlHelper.ExecuteDataset(cmd, ConnectionStringName).Tables[0];
+            DataTable objTable = SqlHelper.ExecuteDataset(cmd, null, ConnectionStringName).Tables[0];
             List<Model.ErrorOtherLogTrigger> aryModels = new List<Model.ErrorOtherLogTrigger>();
             foreach (DataRow objRow in objTable.Rows)
             {
@@ -47,7 +47,7 @@ namespace General.ErrorLogging.Data
             cmd.Parameters.AddWithValue("@EmailSent", blnEmailSent);
             if (!General.StringFunctions.IsNullOrWhiteSpace(strDetails))
                 cmd.Parameters.AddWithValue("@Details", strDetails);
-            SqlHelper.ExecuteNonQuery(cmd, ConnectionStringName);
+            SqlHelper.ExecuteNonQuery(cmd, null, ConnectionStringName);
         }
         #endregion
 
