@@ -446,7 +446,7 @@ namespace General.ErrorLogging.Client
                 #endregion
 
                 //Send an email
-                var emailResult = await SendEmailToAdmin(strSubject, strBody, isHtml).ConfigureAwait(false);
+                var emailResult = false;// await SendEmailToAdmin(strSubject, strBody, isHtml).ConfigureAwait(false);
 
                 //Update the response object
                 response.BackupLogSent = emailResult;
