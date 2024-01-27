@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.ErrorLogging.GUI", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "General.Core", "..\General\General.Core\General.Core.csproj", "{40BCBE14-D0C2-4EAA-9FA6-4B1DE32D78B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.ErrorLogging.Core", "General.ErrorLogging.Core\General.ErrorLogging.Core.csproj", "{10E0D0B5-0178-4771-BCF3-A3948B0BC4CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "General.ErrorLogging.Core", "General.ErrorLogging.Core\General.ErrorLogging.Core.csproj", "{10E0D0B5-0178-4771-BCF3-A3948B0BC4CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

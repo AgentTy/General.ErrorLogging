@@ -95,6 +95,7 @@ namespace General.ErrorLogging.GUI.Controllers
 
         public ActionResult WhoAmI()
         {
+            System.Data.SqlClient.SqlConnection.ClearAllPools();
             ViewBag.Message = "";
             ViewBag.MachineName = System.Environment.MachineName;
             return View();
