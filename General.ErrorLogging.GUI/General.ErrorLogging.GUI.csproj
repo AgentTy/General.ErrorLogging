@@ -402,6 +402,7 @@
     <None Include="Properties\PublishProfiles\ErrorLogging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ErrorLogging QA - AZMISDWEB04.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\SuperLogger - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Toolkit V2 PROD.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\General.ErrorLogging.min.js" />
