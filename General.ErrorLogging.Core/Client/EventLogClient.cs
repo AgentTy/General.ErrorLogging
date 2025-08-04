@@ -564,7 +564,7 @@ namespace General.ErrorLogging.Client
 
     public class FilterCacheManager
     {
-        static string APIActionPattern_GetFilters = "api/[AppID]/LoggingFilter/ActiveFiltersForRemoteApp";
+        public static string APIActionPattern_GetFilters = "api/[AppID]/LoggingFilter/ActiveFiltersForRemoteApp";
 
         protected List<LoggingFilterRemoteServerView> CurrentFilters;
         protected DateTimeOffset CurFiltersTimeStamp;
@@ -585,7 +585,7 @@ namespace General.ErrorLogging.Client
             CurFiltersTimeStamp = DateTimeOffset.Now;
         }
 
-        protected async Task<List<LoggingFilterRemoteServerView>> Get()
+        public async Task<List<LoggingFilterRemoteServerView>> Get()
         {
             General.ErrorLogging.Data.LoggingFilter.GetActiveFiltersDataContext request = new General.ErrorLogging.Data.LoggingFilter.GetActiveFiltersDataContext();
             request.AccessCode = ErrorReporter.ErrorAPIWriteOnlyAccessCode;
