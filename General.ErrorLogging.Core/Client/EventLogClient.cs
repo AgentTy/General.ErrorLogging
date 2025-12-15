@@ -277,7 +277,7 @@ namespace General.ErrorLogging.Client
             using (var client = new HttpClient())
             {
                 client.BaseAddress = uriEndpoint;
-                client.Timeout = TimeSpan.FromSeconds(10);
+                client.Timeout = TimeSpan.FromSeconds(30); // Increased from 10 to 30
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
